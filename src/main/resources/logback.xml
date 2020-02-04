@@ -1,0 +1,116 @@
+<configuration debug="true">
+    <appender name="FILE-WARN-ERROR"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <filter class="edu.refactor.demo.filter.CustomFilter">
+            <levels>warn|error</levels>
+        </filter>
+
+        <file>FILE-WARN-ERROR.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                %d{yyyy-MM-dd HH:mm:ss} - %msg%n
+            </Pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>FILE-WARN-ERROR.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+    <appender name="FILE-OTHER"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="edu.refactor.demo.filter.CustomFilter">
+            <levels>trace|debug|info</levels>
+        </filter>
+
+        <file>FILE-OTHER.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                %d{yyyy-MM-dd HH:mm:ss} - %msg%n
+            </Pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>FILE-OTHER.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="FILE-DEBUG-INFO-SERVICE"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <filter class="edu.refactor.demo.filter.CustomFilter">
+            <levels>debug|info</levels>
+        </filter>
+        <file>FILE-DEBUG-INFO-SERVICE.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                %d{yyyy-MM-dd HH:mm:ss} - %msg%n
+            </Pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>FILE-DEBUG-INFO-SERVICE.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="FILE-DEBUG-INFO-REST"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <filter class="edu.refactor.demo.filter.CustomFilter">
+            <levels>debug|info</levels>
+        </filter>
+
+        <file>FILE-DEBUG-INFO-REST.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                %d{yyyy-MM-dd HH:mm:ss} - %msg%n
+            </Pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>FILE-DEBUG-INFO-REST.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+
+    <!--    Все дебаг и инфо сообщения из сервисов(service) поместить в отдельный файл-->
+    <logger name="edu.refactor.demo.service">
+        <appender-ref ref="FILE-DEBUG-INFO-SERVICE" />
+    </logger>
+
+    <!--    Все дебаг и инфо сообщения из контроллеров(rest) поместить в отдельный файл-->
+    <logger name="edu.refactor.demo.rest">
+        <appender-ref ref="FILE-DEBUG-INFO-REST" />
+    </logger>
+
+    <!--    Все исключения и ворнинги выводить в отдельный файл-->
+    <logger name="ru.papont">
+        <appender-ref ref="FILE-WARN-ERROR"/>
+    </logger>
+
+    <!--    Все остальное выводить в отдельный файл-->
+    <root level="trace">
+        <appender-ref ref="FILE-OTHER"/>
+    </root>
+
+</configuration>
